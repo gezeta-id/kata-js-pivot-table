@@ -7,21 +7,21 @@ var pivot = require('./processing/pivot.js').pivot;
 var render = require('./view/renderer.js').render;
 //var inspect = require('./view/renderer.js').inspect;
 
-var Celda = function(nombre) { return function(valor) { return new Cell(nombre, valor); }; };
-var Enero = Celda("ENERO"); var Febrero = Celda("FEBRERO"); var Marzo = Celda("MARZO"); var Abril = Celda("ABRIL");
-var Fecha = Celda("FECHA"); var Valor = Celda("VALOR"); var Gestor = Celda("GESTOR"); var Linea = Celda("LINEA");
+var CellBuilder = function(name) { return function(value) { return new Cell(name, value); }; };
+var January = CellBuilder("JANUARY"); var February = CellBuilder("FEBRUARY"); var March = CellBuilder("MARCH"); var April = CellBuilder("APRIL");
+var Month = CellBuilder("MONTH"); var Value = CellBuilder("VALUE"); var Manager = CellBuilder("MANAGER"); var ProductLine = CellBuilder("PRODUCT LINE");
 
 
-var header = ["GESTOR", "LINEA", "FECHA", "VALOR"];
+var header = ["MANAGER", "PRODUCT LINE", "MONTH", "VALUE"];
 
 var rows = [
-    new Row([Gestor("Sam"), Linea("Segunda Mano"), Fecha("ENERO"), Valor(20)]),
-    new Row([Gestor("Sam"), Linea("Segunda Mano"), Fecha("FEBRERO"), Valor(21)]),
-    new Row([Gestor("Sam"), Linea("Segunda Mano"), Fecha("MARZO"), Valor(22)]),
-    new Row([Gestor("Sam"), Linea("Segunda Mano"), Fecha("ABRIL"), Valor(25)]),
-    new Row([Gestor("Max"), Linea("Segunda Mano"), Fecha("ENERO"), Valor(30)]),
-    new Row([Gestor("Max"), Linea("Segunda Mano"), Fecha("MARZO"), Valor(32)]),
-    new Row([Gestor("Max"), Linea("Segunda Mano"), Fecha("ABRIL"), Valor(35)])
+    new Row([Manager("Sam"), ProductLine("Second Hand"), Month("JANUARY"), Value(20)]),
+    new Row([Manager("Sam"), ProductLine("Second Hand"), Month("FEBRUARY"), Value(21)]),
+    new Row([Manager("Sam"), ProductLine("Second Hand"), Month("MARCH"), Value(22)]),
+    new Row([Manager("Sam"), ProductLine("Second Hand"), Month("APRIL"), Value(25)]),
+    new Row([Manager("Max"), ProductLine("Second Hand"), Month("JANUARY"), Value(30)]),
+    new Row([Manager("Max"), ProductLine("Second Hand"), Month("MARCH"), Value(32)]),
+    new Row([Manager("Max"), ProductLine("Second Hand"), Month("APRIL"), Value(35)])
 ];
 
 var table = new Table(header, rows);
@@ -29,8 +29,8 @@ var table = new Table(header, rows);
 //inspect(table);
 render(table);
 
-console.log("Pivotamos...\n");
+console.log("After pivoting...\n");
 
-var pivotedTable = pivot(table, "FECHA", "VALOR");
+var pivotedTable = pivot(table, "MONTH", "VALUE");
 
 render(pivotedTable);

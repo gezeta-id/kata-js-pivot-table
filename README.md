@@ -1,124 +1,124 @@
-# Kata/Ejercicio Pivotando Tablas
+# A Kata/Exercise about Pivoting Tables
 
-En una imaginaria aplicación que hemos desarrollado para generar informes y tablas de datos, nos
+In an imaginary application we've developed to auto-generate reports and data tables, we've found that there's a fair number of tables with a structure similar to the following:
 encontramos con que toda una serie de tablas tienen una pinta como la siguiente:
 
-| Gestor |     Línea    | Fecha   | Valor |
-|--------|:------------:|---------|------:|
-| Sam    | Segunda Mano | Enero   | 20    |
-| Sam    | Segunda Mano | Febrero | 22    |
-| Sam    | Segunda Mano | Marzo   | 25    |
-| Max    | Segunda Mano | Enero   | 15    |
-| Max    | Segunda Mano | Marzo   | 19    |
+| Manager | Product Line | Month    | Value |
+|---------|:------------:|----------|------:|
+| Sam     | Second Hand  | January  | 20    |
+| Sam     | Second Hand  | February | 22    |
+| Sam     | Second Hand  | March    | 25    |
+| Max     | Second Hand  | January  | 15    |
+| Max     | Second Hand  | March    | 19    |
 
-Y tras usar la aplicación durante un tiempo empezamos a recibir solicitudes para mostrar los datos
+And, after using the application for a while, we start getting requests to be able to see the data in this other format:
 de este otro modo:
 
-| Gestor |     Línea    | Enero | Febrero | Marzo |
-|--------|:------------:|------:|--------:|------:|
-| Sam    | Segunda Mano | 20    | 22      | 25    |
-| Max    | Segunda Mano | 15    |         | 19    |
+| Manager | Product Line | January | February | March |
+|---------|:------------:|--------:|---------:|------:|
+| Sam     | Second Hand  | 20      | 22       | 25    |
+| Max     | Second Hand  | 15      |          | 19    |
 
-Es decir, resulta mucho más cómodo y práctico para los usuarios poder _pivotar_ la tabla,
-agrupando ciertas filas y mostrando el contenido de las columnas diferentes como celdas de la misma
-fila. En el ejemplo, hemos escogido dos columnas en la tabla original:
+That is, it's more practical for users to be able to _pivot_ the table, grouping certain rows and showing the content of the vairous columns as cells in the same row. In the example, we've chosen two columns from the original table:
 
- - "Fecha" es la columna que se convertirá en cabecera
- - "Valor" es la columna que se convertirá en valores
+ - "Month" is the column that will be transformed into a header.
+ - "Value" is the column that will be transformed into rows of data.
 
-Luego se agrupa por el resto de columnas y se pivota respecto a las columnas elegidas.
+So we group by the rest of the columns and pivot on the chosen ones.
 
 
-El objetivo del ejercicio consiste en implementar la función `pivot` (y las entidades auxiliares que
-necesitemos, claro) que hace la transformación de la tabla.
+> The goal of this exercise is to implement the function `pivot` (and any other auxiliary entities you may need, of course) that applies such a transformation on a table.
 
-## El código de partida
 
-Para el ejecricio hemos implementado una aplicación básica en JavaScript.
+## Starting code
 
-La aplicación incialmente consta de un _dominio_ (`src/domain`) que contiene 3 entidades: `Table`,
-`Row`, y `Cell`. Las tres nos permiten generar objetos del tipo correspondiente que serán _inmutables_
-de modo que cualquier operación que suponga modificación debe resultar en un nuevo objeto del tipo
-correspondiente.
+For the exercise I've implemented a basic application in JavaScript.
 
-Más abajo se describe brevemente el API del dominio. Este dominio de la aplicación, ya está en uso, de modo que se considera que una solución válida no debería modificar ninguno de estos ficheros salvo en caso de encontrar un bug o alguna emergencia similar. Si queremos podemos inspeccionar su código para comprender mejor la aplicación, pero no es realmente necesario más allá de conocer su interfaz público.
+The application initially comprises a _domain_ (`src/domain`) that contains 3 entities: `Table`,
+`Row`, and `Cell`. Those allow us to create _immutable_ objects of the corresponding type.
 
-Además de esto, nuestro mentor nos ha dejado preparadas algunas cosas más que podremos usar:
+Below there's a breif description of the domain's API. We consider this domain to be _in use_, so it is established that a valid solution should **not** mean modifying any of these files. Yoiu can, if it helps you, inspect the domain code itself, but it should be enough to just know its public interface.
 
- - Nuestro campo de trabajo es el módulo `src/processing/pivot.js` que debe exportar una función única `pivot` que realiza el pivotaje. De partida la función simplemente devuelve la misma tabla recibida, tal cual :)
- - Hay un `src/index.js` (ejecutable con `npm run main`) que podemos usar como ejemplo sencillo para entender el problema.
- - En la carpeta (`src/view/`) hemos dejado un par de utilidades que nos permiten pintar objeto `Table` en consola.
+Besides this, our mentor has written a few things more that we can use:
 
-Por último tenemos `test/spec.js` que contiene unos tests básicos sobre el dominio que quizá nos ayuden a entender cómo funciona este y otra serie de tests sobre el caso más básico de pivotaje. Este será el punto de partida para nuestro trabajo.
+ - Our main work area will be the module at `src/processing/pivot.js`. It should export an object with only one `pivot` function that performs the pivoting task. Initially there's a dummy implementation that just returns the same table it is given _as is_.
+ - There's a `src/index.js` (runnable through `npm run main`) that we can use as a simple example to understand our problem.
+ - In the `src/view/` folder, we've left a couple of utilities that can be useful to dump a `Table` object onto the console.
 
-## Cómo empezar
+Finally there's `test/spec.js` with a simple basic test battery on the domain that can help understand how it works, and a couple of tests more for the most basic use case of pivoting. These tests should be our starting point for the task.
 
-Requisitos: NodeJS + npm.
+## How to start
 
-Lo ideal es clonar el repositorio, crear una nueva rama y empezar a trabajar en la nueva rama para tener siempre `master` con una versión fresca y limpia del ejercicio sin soluciones. El repositorio original incluye una rama con una posible solución pero se recomienda encarecidamente no mirarla para que el ejercicio tenga sentido.
+Requirements: NodeJS + npm.
 
-Si no, siempre podemos bajar el proyecto sin clonarlo y empezar a trabajar directamente sin gestión de versiones. Pero es mucho más divertido con!
+The ideal way to start is to just clone the repository, create a new branch and start working on the new branch. This will leave `master` fresh and clean. The original repository contains a branch with a possible solution, but you're dearly encouraged to ignore it and try building your own solution.
 
-Una vez tengamos el proyecto, ejecutamos en la carpeta raíz del mismo:
+You can always download the project without cloning and just work on it directly without version management. But it is better with it.
+
+Once you have the project, execute the following command in the root folder...
 
 ```bash
 > npm install
 ```
 
-para instalar las dependencias propias del proyecto.
+...to install the project's dependencies.
 
-Una vez hecho esto podemos:
+With this done, you can:
 
- - Ver el proyecto en marcha ejecutando `npm run main`. Saldrán por consola dos tablas incialmente iguales.
- - Ejecutar los tests que nos indicarán por dónde deberíamos empezar a trabajar: `npm test`.
+ - Watch the project run with `npm run main`. You will get two tables otuput on the console. Initially they'll be exactly the same.
+ - Run the tests executing `npm test` to get an indication on where to start working.
 
-Podemos usar el editor o IDE que más nos guste. Todo el proyecto corre en consola con NodeJS de modo que no necesitamos más herramientas.
+You can use any editor or IDe of your choice. The whole project runs on the console with NodeJS, so you shouldn't _need_ anything else.
 
-Si queremos, también tenemos la posibilidad de ejecutar
+If you want, you can also run...
 
 ```bash
 > npm run watch
 ```
 
-que dejará un proceso abierto en consola que ejecutará los tests una vez inicial y luego cada vez que modifiquemos algún fichero.
+...which will leave an open process on the console running the tests once initially and again each time a file is modified.
 
-A partir de aquí, editaremos `src/processing/pivot.js` para ir haciendo que pasen los varios test que inicialmente fallan.
+From there on, you should work by editing `src/processing/pivot.js` to make the failing tests pass.
 
-## API del Dominio
+## Domain's API
 
-Según las reglas del ejercicio, se considera que no deberemos modificar ninguna de estas entidades, ya que están en uso en otras partes de nuestra aplicación imaginaria. El API de cada una de ellas es relativamente sencillo:
+According to the rules of the exercise, it is established that you should **not** modify any of the domain entities, because they are already in use in other parts of our imaginary application.
+
+The API is relatively simple:
 
 ### Cell
 
 ```javascript
-var cell = new Cell("Mes", "Enero");
+var cell = new Cell("Month", "January");
 
-console.log(cell.name, cell.value); // "Mes" "Enero" - sólo lectura
+console.log(cell.name, cell.value); // "Month" "January" - read only ;)
 ```
 
 ### Row
 
 ```javascript
-var row = new Row([new Cell("Mes", "Enero"), new Cell("Visitas", 4)]);
+var row = new Row([new Cell("Month", "January"), new Cell("Visits", 4)]);
 
-console.log(row.cells); // [new Cell("Mes", "Enero"), new Cell("Visitas", 4)] - sólo lectura
+console.log(row.cells); // [new Cell("Month", "January"), new Cell("Visits", 4)] - read only
 console.log(row.size()); // 2
-console.log(row.nameAt(1)); // "Visitas"
+console.log(row.nameAt(1)); // "Visits"
 console.log(row.valueAt(1)); // 4
-console.log(row.valueAtName("Visitas")); // 4
-console.log(row.cellNamed("Visitas")); // new Cell("Visitas", 4)
-console.log(row.values()); // ["Enero", 4]
-console.log(row.valuesMap()); // { "Mes": "Enero", "Visitas": 4 }
-console.log(row.contains("Visitas")); // true
+console.log(row.valueAtName("Visits")); // 4
+console.log(row.cellNamed("Visits")); // new Cell("Visits", 4)
+console.log(row.values()); // ["January", 4]
+console.log(row.valuesMap()); // { "Month": "January", "Visits": 4 }
+console.log(row.contains("Visits")); // true
 ```
 
 ### Table
 
 ```javascript
-var table = new Table(["Mes", "Visitas"], [row, row, row]);
+var row = new Row([new Cell("Month", "January"), new Cell("Visits", 4)]);
 
-console.log(table.header); // ["Mes", "Visitas"] - sólo lectura
-console.log(table.rows); // [row, row, row] - sólo lectura
+var table = new Table(["Month", "Visits"], [row, row, row]);
+
+console.log(table.header); // ["Month", "Visits"] - read only
+console.log(table.rows); // [row, row, row] - read only
 console.log(table.numRows()); // 3
 console.log(table.numCols())); // 2
 console.log(table.row(1)); // row

@@ -46,13 +46,13 @@ describe('A Row...', function () {
         expect(testRow.size()).to.equal(testRow.cells.length);
     });
     it('knows about the cells it contains', function () {
-        expect(testRow.contains("LINEA")).to.be.true;
+        expect(testRow.contains("PRODUCT LINE")).to.be.true;
         expect(testRow.contains("BINGO")).to.be.false;
     });
     it('allows searching its cells', function() {
-        expect(testRow.nameAt(1)).to.equal("LINEA");
-        expect(testRow.valueAt(1)).to.equal("Segunda Mano");
-        expect(testRow.valueAtName("LINEA")).to.equal("Segunda Mano");
+        expect(testRow.nameAt(1)).to.equal("PRODUCT LINE");
+        expect(testRow.valueAt(1)).to.equal("Second Hand");
+        expect(testRow.valueAtName("PRODUCT LINE")).to.equal("Second Hand");
     });
 });
 describe('A Cell...', function () {
@@ -79,22 +79,22 @@ describe('When pivoting a Table...', function() {
         createTestTables();
     });
     it('The pivoted table should have the expected number of rows', function () {
-        var pivotedTable = pivot(originalTable, "FECHA", "VALOR");
+        var pivotedTable = pivot(originalTable, "MONTH", "VALUE");
         expect(pivotedTable.numRows()).to.equal(expectedTable.numRows());
     });
     it('The pivoted table should have the expected number of columns', function () {
-        var pivotedTable = pivot(originalTable, "FECHA", "VALOR");
+        var pivotedTable = pivot(originalTable, "MONTH", "VALUE");
         expect(pivotedTable.numCols()).to.equal(expectedTable.numCols());
     });
     it('The pivoted table should have the expected header', function () {
-        var pivotedTable = pivot(originalTable, "FECHA", "VALOR");
+        var pivotedTable = pivot(originalTable, "MONTH", "VALUE");
         expect(pivotedTable.header).to.deep.equal(expectedTable.header);
     });
     it('The pivoted table should have the expected content', function() {
-        var pivotedTable = pivot(originalTable, "FECHA", "VALOR");
+        var pivotedTable = pivot(originalTable, "MONTH", "VALUE");
         var pivotedCellNameAt14 = pivotedTable.row(1).nameAt(3);
         var pivotedCellValueAt14 = pivotedTable.row(1).valueAt(3);
-        expect(pivotedCellNameAt14).to.equal("FEBRERO");
+        expect(pivotedCellNameAt14).to.equal("FEBRUARY");
         expect(pivotedCellValueAt14).to.equal(31);
     });
 
@@ -102,27 +102,27 @@ describe('When pivoting a Table...', function() {
 
 /* -- -- Building Test Fixtures -- -- */
 
-var Celda = function(nombre) { return function(valor) { return new Cell(nombre, valor); }; };
-var Enero = Celda("ENERO"); var Febrero = Celda("FEBRERO"); var Marzo = Celda("MARZO"); var Abril = Celda("ABRIL");
-var Fecha = Celda("FECHA"); var Valor = Celda("VALOR"); var Gestor = Celda("GESTOR"); var Linea = Celda("LINEA");
+var CellBuilder = function(name) { return function(value) { return new Cell(name, value); }; };
+var January = CellBuilder("JANUARY"); var February = CellBuilder("FEBRUARY"); var March = CellBuilder("MARCH"); var April = CellBuilder("APRIL");
+var Month = CellBuilder("MONTH"); var Value = CellBuilder("VALUE"); var Manager = CellBuilder("MANAGER"); var ProductLine = CellBuilder("PRODUCT LINE");
 
 function createTestTables() {
-        originalHeader = ["GESTOR", "LINEA", "FECHA", "VALOR"];
-        pivotedHeader = ["GESTOR", "LINEA", "ENERO", "FEBRERO", "MARZO", "ABRIL"];
+        originalHeader = ["MANAGER", "PRODUCT LINE", "MONTH", "VALUE"];
+        pivotedHeader = ["MANAGER", "PRODUCT LINE", "JANUARY", "FEBRUARY", "MARCH", "APRIL"];
 
         originalRows = [
-            new Row([Gestor("Sam"), Linea("Segunda Mano"), Fecha("ENERO"), Valor(20)]),
-            new Row([Gestor("Sam"), Linea("Segunda Mano"), Fecha("FEBRERO"), Valor(21)]),
-            new Row([Gestor("Sam"), Linea("Segunda Mano"), Fecha("MARZO"), Valor(22)]),
-            new Row([Gestor("Sam"), Linea("Segunda Mano"), Fecha("ABRIL"), Valor(25)]),
-            new Row([Gestor("Max"), Linea("Segunda Mano"), Fecha("ENERO"), Valor(30)]),
-            new Row([Gestor("Max"), Linea("Segunda Mano"), Fecha("FEBRERO"), Valor(31)]),
-            new Row([Gestor("Max"), Linea("Segunda Mano"), Fecha("MARZO"), Valor(32)]),
-            new Row([Gestor("Max"), Linea("Segunda Mano"), Fecha("ABRIL"), Valor(35)])
+            new Row([Manager("Sam"), ProductLine("Second Hand"), Month("JANUARY"),  Value(20)]),
+            new Row([Manager("Sam"), ProductLine("Second Hand"), Month("FEBRUARY"), Value(21)]),
+            new Row([Manager("Sam"), ProductLine("Second Hand"), Month("MARCH"),    Value(22)]),
+            new Row([Manager("Sam"), ProductLine("Second Hand"), Month("APRIL"),    Value(25)]),
+            new Row([Manager("Max"), ProductLine("Second Hand"), Month("JANUARY"),  Value(30)]),
+            new Row([Manager("Max"), ProductLine("Second Hand"), Month("FEBRUARY"), Value(31)]),
+            new Row([Manager("Max"), ProductLine("Second Hand"), Month("MARCH"),    Value(32)]),
+            new Row([Manager("Max"), ProductLine("Second Hand"), Month("APRIL"),    Value(35)])
         ];
         pivotedRows = [
-            new Row([Gestor("Sam"), Linea("Segunda Mano"), Enero(20), Febrero(21), Marzo(22), Abril(25)]),
-            new Row([Gestor("Max"), Linea("Segunda Mano"), Enero(30), Febrero(31), Marzo(32), Abril(35)])
+            new Row([Manager("Sam"), ProductLine("Second Hand"), January(20), February(21), March(22), April(25)]),
+            new Row([Manager("Max"), ProductLine("Second Hand"), January(30), February(31), March(32), April(35)])
         ];
 
         originalTable = new Table(originalHeader, originalRows);
@@ -131,5 +131,5 @@ function createTestTables() {
 }
 
 function createTestRow() {
-    testRow =  new Row([Gestor("Max"), Linea("Segunda Mano"), Fecha("ABRIL"), Valor(35)])
+    testRow =  new Row([Manager("Max"), ProductLine("Second Hand"), Month("APRIL"), Value(35)])
 }
