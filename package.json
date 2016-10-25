@@ -8,7 +8,7 @@
     "test": "mocha --reporter spec",
     "watch": "mocha --reporter min --watch --recursive test/"
   },
-  "author": "gezeta-id <gbrachi@idealista.com>",
+  "author": "gezeta-id <gnz.garcia@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "chai": "^2.0.0",

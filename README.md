@@ -1,7 +1,6 @@
 # A Kata/Exercise about Pivoting Tables
 
 In an imaginary application we've developed to auto-generate reports and data tables, we've found that there's a fair number of tables with a structure similar to the following:
-encontramos con que toda una serie de tablas tienen una pinta como la siguiente:
 
 | Manager | Product Line | Month    | Value |
 |---------|:------------:|----------|------:|
