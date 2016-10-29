@@ -35,7 +35,7 @@ For the exercise I've implemented a basic application in JavaScript.
 The application initially comprises a _domain_ (`src/domain`) that contains 3 entities: `Table`,
 `Row`, and `Cell`. Those allow us to create _immutable_ objects of the corresponding type.
 
-Below there's a breif description of the domain's API. We consider this domain to be _in use_, so it is established that a valid solution should **not** mean modifying any of these files. Yoiu can, if it helps you, inspect the domain code itself, but it should be enough to just know its public interface.
+Below there's a brief description of the domain's API. We consider this domain to be _in use_, so it is established that a valid solution should **not** mean modifying any of these files. Yoiu can, if it helps you, inspect the domain code itself, but it should be enough to just know its public interface.
 
 Besides this, our mentor has written a few things more that we can use:
 
