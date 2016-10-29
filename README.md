@@ -11,7 +11,6 @@ In an imaginary application we've developed to auto-generate reports and data ta
 | Max     | Second Hand  | March    | 19    |
 
 And, after using the application for a while, we start getting requests to be able to see the data in this other format:
-de este otro modo:
 
 | Manager | Product Line | January | February | March |
 |---------|:------------:|--------:|---------:|------:|
