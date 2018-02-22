@@ -6,8 +6,7 @@
   "scripts": {
     "main": "node src/index.js",
     "test": "mocha --reporter spec",
-    "nyc": "nyc mocha --reporter spec",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "cover": "nyc mocha --reporter spec",
     "watch": "mocha --reporter min --watch --recursive test/"
   },
   "author": "gezeta-id <gbrachi@idealista.com>",
@@ -20,7 +19,6 @@
     "sinon-chai": "^2.7.0"
   },
   "devDependencies": {
-    "coveralls": "^3.0.0",
     "nyc": "^11.4.1"
   }
 }
