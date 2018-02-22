@@ -54,6 +54,15 @@ describe('A Row...', function () {
         expect(testRow.valueAt(1)).to.equal("Segunda Mano");
         expect(testRow.valueAtName("LINEA")).to.equal("Segunda Mano");
     });
+    it('doesn`t contain what it doesn`t', function() {
+        expect(testRow.nameAt(5)).to.equal(undefined);
+        expect(testRow.valueAt(5)).to.equal(undefined);
+        expect(testRow.valueAtName("NONAME")).to.equal(null);
+        expect(testRow.cellNamed("NONAME")).to.be.empty;
+        expect(testRow.values()).to.deep.equal(['Max', 'Segunda Mano', 'ABRIL', 35]);
+        expect(testRow.valuesMap()).to.deep.equal({
+            'GESTOR': 'Max', 'LINEA': 'Segunda Mano', 'FECHA': 'ABRIL', 'VALOR': 35});
+    });
 });
 describe('A Cell...', function () {
     var testCell;
